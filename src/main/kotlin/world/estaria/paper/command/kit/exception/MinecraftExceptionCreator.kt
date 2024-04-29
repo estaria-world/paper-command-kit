@@ -21,9 +21,9 @@ class MinecraftExceptionCreator(
 
     fun create(commandManager: PaperCommandManager<CommandSender>) {
         MinecraftExceptionHandler.createNative<CommandSender>()
-            .handler(NoPermissionException::class.java) { MinecraftExceptionHandler.createDefaultNoPermissionHandler<CommandSender>().apply(it) }
-            .handler(ArgumentParseException::class.java) { getComponentCommandUsage(it.exception()) }
-            .handler(InvalidSyntaxException::class.java) { getComponentCommandUsage(it.exception()) }
+            .handler(NoPermissionException::class.java, MinecraftExceptionHandler.createDefaultNoPermissionHandler())
+            .handler(ArgumentParseException::class.java) { _, exception -> getComponentCommandUsage(exception.exception()) }
+            .handler(InvalidSyntaxException::class.java) { _, exception -> getComponentCommandUsage(exception.exception()) }
             .registerTo(commandManager)
     }
 
