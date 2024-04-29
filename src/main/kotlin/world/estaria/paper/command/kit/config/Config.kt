@@ -25,7 +25,7 @@ class Config(
 
     fun getMessage(type: CommandMessage.Type): Component {
         val message = this.messages.first { it.type == type }
-        return text("$prefix $message")
+        return text("$prefix ${message.message}")
     }
 
 }
