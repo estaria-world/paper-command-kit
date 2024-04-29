@@ -14,7 +14,7 @@ enum class ExceptionType {
     KUBERNETES {
         override fun executeExceptionHandler(commandManager: PaperCommandManager<CommandSender>) {
             val configMapHandler = ConfigMapHandler()
-            MinecraftExceptionCreator(configMapHandler.getConfig())
+            MinecraftExceptionCreator(configMapHandler.getConfig()).create(commandManager)
         }
     },
 
