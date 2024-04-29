@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "world.estaria"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -27,7 +27,7 @@ repositories {
     }
 }
 
-private var incendoCloudVersion = "2.0.0-beta.1"
+private var incendoCloudVersion = "2.0.0-beta.2"
 
 dependencies {
     // avionik dependencies
