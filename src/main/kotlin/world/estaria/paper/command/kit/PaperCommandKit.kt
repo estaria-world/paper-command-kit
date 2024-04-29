@@ -15,8 +15,9 @@ object PaperCommandKit {
      * Creates a new instance of [CommandBuilder]
      * @param javaPlugin to initialize the cloud commands
      * @param exceptionType where should the exception messages come from
+     * @return new command builder instance
      */
-    fun create(javaPlugin: JavaPlugin, exceptionType: ExceptionType = ExceptionType.KUBERNETES) {
+    fun create(javaPlugin: JavaPlugin, exceptionType: ExceptionType = ExceptionType.KUBERNETES): CommandBuilder {
         val commandManager = PaperCommandManager.createNative(
             javaPlugin,
             ExecutionCoordinator.simpleCoordinator()
@@ -24,7 +25,7 @@ object PaperCommandKit {
         commandManager.registerBrigadier()
         commandManager.registerAsynchronousCompletions()
         exceptionType.executeExceptionHandler(commandManager)
-        return
+        return CommandBuilder(commandManager)
     }
 
 }
