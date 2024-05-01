@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "world.estaria"
-version = "1.0.5"
+version = "1.0.6"
 
 repositories {
     mavenCentral()
@@ -52,8 +52,7 @@ dependencies {
 
     // estaria dependencies
     compileOnly("world.estaria:kube-configmap-kit:1.0.4")
-    compileOnly("world.estaria:translation-api:1.0.3")
-    compileOnly("world.estaria:github-file-manager:1.0.1")
+    compileOnly("world.estaria:translation-api:1.0.4")
 
     // paper dependencies
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")

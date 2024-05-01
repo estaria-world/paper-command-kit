@@ -3,7 +3,6 @@ package world.estaria.paper.command.kit
 import org.bukkit.plugin.java.JavaPlugin
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.paper.PaperCommandManager
-import world.estaria.github.file.manager.token.TokenStorageType
 import world.estaria.paper.command.kit.exception.MinecraftExceptionCreator
 import world.estaria.translation.api.TranslationInitializer
 
@@ -20,11 +19,10 @@ object PaperCommandKit {
      * @return new command builder instance
      */
     fun create(
-        javaPlugin: JavaPlugin,
-        tokenStorageType: TokenStorageType = TokenStorageType.KUBERNETES
+        javaPlugin: JavaPlugin
     ): CommandBuilder {
         val translationManager = TranslationInitializer("exceptionCommands", "paper")
-            .initialize(tokenStorageType)
+            .initialize()
 
         val commandManager = PaperCommandManager.createNative(
             javaPlugin,
