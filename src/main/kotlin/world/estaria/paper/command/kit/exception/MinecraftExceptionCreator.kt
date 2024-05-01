@@ -37,15 +37,15 @@ class MinecraftExceptionCreator(
         return if (commandUsage.contains("|")) {
             getMoreThanOneCommandUsage(commandUsage)
         } else {
-            this.config.getMessage(CommandMessage.Type.ONE_COMMAND)
+            this.config.getMessage(CommandMessage.Type.ONE_COMMAND).append(text("<#fffbeb>/$commandUsage"))
         }
     }
 
     private fun getMoreThanOneCommandUsage(message: String): Component {
-        val fancyMessage = message.replace("|", "<#c7ecee> | <#dff9fb>")
+        val fancyMessage = message.replace("|", "<#fef3c7> | <#fffbeb>")
         return this.config.getMessage(CommandMessage.Type.MORE_COMMANDS)
             .append(text("\n"))
-            .append(text("${config.prefix} <#dff9fb>$fancyMessage"))
+            .append(text("${config.prefix} <#fffbeb>$fancyMessage"))
     }
 
 }
