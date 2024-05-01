@@ -19,7 +19,10 @@ object PaperCommandKit {
      * @param tokenStorageType where should the GitHub token
      * @return new command builder instance
      */
-    fun create(javaPlugin: JavaPlugin, tokenStorageType: TokenStorageType): CommandBuilder {
+    fun create(
+        javaPlugin: JavaPlugin,
+        tokenStorageType: TokenStorageType = TokenStorageType.KUBERNETES
+    ): CommandBuilder {
         val translationManager = TranslationInitializer("exceptionCommands", "paper")
             .initialize(tokenStorageType)
 
