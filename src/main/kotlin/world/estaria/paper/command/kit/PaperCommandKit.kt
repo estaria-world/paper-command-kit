@@ -3,7 +3,9 @@ package world.estaria.paper.command.kit
 import org.bukkit.plugin.java.JavaPlugin
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.paper.PaperCommandManager
-import world.estaria.paper.command.kit.exception.ExceptionType
+import world.estaria.github.file.manager.token.TokenStorageType
+import world.estaria.paper.command.kit.exception.MinecraftExceptionCreator
+import world.estaria.translation.api.TranslationInitializer
 
 /**
  * @author Niklas Nieberler
@@ -14,17 +16,20 @@ object PaperCommandKit {
     /**
      * Creates a new instance of [CommandBuilder]
      * @param javaPlugin to initialize the cloud commands
-     * @param exceptionType where should the exception messages come from
+     * @param tokenStorageType where should the GitHub token
      * @return new command builder instance
      */
-    fun create(javaPlugin: JavaPlugin, exceptionType: ExceptionType = ExceptionType.KUBERNETES): CommandBuilder {
+    fun create(javaPlugin: JavaPlugin, tokenStorageType: TokenStorageType): CommandBuilder {
+        val translationManager = TranslationInitializer("exceptionCommands", "paper")
+            .initialize(tokenStorageType)
+
         val commandManager = PaperCommandManager.createNative(
             javaPlugin,
             ExecutionCoordinator.simpleCoordinator()
         )
         commandManager.registerBrigadier()
         commandManager.registerAsynchronousCompletions()
-        exceptionType.executeExceptionHandler(commandManager)
+        MinecraftExceptionCreator(translationManager).create(commandManager)
         return CommandBuilder(commandManager)
     }
 

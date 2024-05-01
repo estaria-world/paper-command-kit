@@ -1,51 +1,63 @@
 package world.estaria.paper.command.kit.exception
 
+import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import org.bukkit.command.CommandSender
 import org.incendo.cloud.exception.ArgumentParseException
 import org.incendo.cloud.exception.InvalidSyntaxException
 import org.incendo.cloud.exception.NoPermissionException
+import org.incendo.cloud.exception.handling.ExceptionContext
 import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler
 import org.incendo.cloud.paper.PaperCommandManager
 import world.avionik.minecraft.common.extension.text
-import world.estaria.paper.command.kit.config.CommandMessage
-import world.estaria.paper.command.kit.config.Config
+import world.estaria.translation.api.TranslationManager
+import world.estaria.translation.api.extension.translate
+import world.estaria.translation.api.placeholder.Placeholder
+import world.estaria.translation.api.registry.GlobalTranslator
+import java.util.*
 
 /**
  * @author Niklas Nieberler
  */
 
 class MinecraftExceptionCreator(
-    private val config: Config
-)  {
+    private val translationManager: TranslationManager
+) {
 
     fun create(commandManager: PaperCommandManager<CommandSender>) {
         MinecraftExceptionHandler.createNative<CommandSender>()
             .handler(NoPermissionException::class.java, MinecraftExceptionHandler.createDefaultNoPermissionHandler())
-            .handler(ArgumentParseException::class.java) { _, exception -> getComponentCommandUsage(exception.exception()) }
-            .handler(InvalidSyntaxException::class.java) { _, exception -> getComponentCommandUsage(exception.exception()) }
+            .handler(ArgumentParseException::class.java) { _, exception -> getComponentCommandUsage(exception) }
+            .handler(InvalidSyntaxException::class.java) { _, exception -> getComponentCommandUsage(exception) }
             .registerTo(commandManager)
     }
 
-    private fun getComponentCommandUsage(exception: Exception): Component {
-        val exceptionMessageSplit = exception.message!!.split(":")
+    private fun getComponentCommandUsage(context: ExceptionContext<CommandSender, out Exception>): Component {
+        val contextSender = context.context().sender()
+        val exceptionMessageSplit = context.exception().message!!.split(":")
+
         val commandUsage = exceptionMessageSplit[1]
             .replace("<", "(")
             .replace(">", ")")
             .replaceFirst(" ", "")
 
         return if (commandUsage.contains("|")) {
-            getMoreThanOneCommandUsage(commandUsage)
+            getMoreThanOneCommandUsage(contextSender, commandUsage)
         } else {
-            this.config.getMessage(CommandMessage.Type.ONE_COMMAND).append(text("<#fffbeb>/$commandUsage"))
+            contextSender.translate(
+                "exceptionCommands",
+                "command.tried.this",
+                Placeholder.parsed("command", commandUsage)
+            ).get() // is not the best :/
         }
     }
 
-    private fun getMoreThanOneCommandUsage(message: String): Component {
+    private fun getMoreThanOneCommandUsage(audience: Audience, message: String): Component {
+        val prefix = GlobalTranslator.translate("global", "prefix", Locale.US)?.toPattern()
         val fancyMessage = message.replace("|", "<#fef3c7> | <#fffbeb>")
-        return this.config.getMessage(CommandMessage.Type.MORE_COMMANDS)
+        return this.translationManager.translate("command.more.than.one", audience).get()
             .append(text("\n"))
-            .append(text("${config.prefix} <#fffbeb>$fancyMessage"))
+            .append(text("$prefix <#fffbeb>$fancyMessage"))
     }
 
 }
