@@ -10,8 +10,8 @@ import org.incendo.cloud.exception.handling.ExceptionContext
 import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler
 import org.incendo.cloud.paper.PaperCommandManager
 import world.avionik.minecraft.common.extension.text
-import world.estaria.translation.api.TranslationManager
 import world.estaria.translation.api.extension.translate
+import world.estaria.translation.api.namespace.TranslationService
 import world.estaria.translation.api.placeholder.Placeholder
 import world.estaria.translation.api.registry.GlobalTranslator
 import java.util.*
@@ -20,9 +20,7 @@ import java.util.*
  * @author Niklas Nieberler
  */
 
-class MinecraftExceptionCreator(
-    private val translationManager: TranslationManager
-) {
+class MinecraftExceptionCreator {
 
     fun create(commandManager: PaperCommandManager<CommandSender>) {
         MinecraftExceptionHandler.createNative<CommandSender>()
@@ -55,7 +53,8 @@ class MinecraftExceptionCreator(
     private fun getMoreThanOneCommandUsage(audience: Audience, message: String): Component {
         val prefix = GlobalTranslator.translate("global", "prefix", Locale.US)?.toPattern()
         val fancyMessage = message.replace("|", "<#fef3c7> | <#fffbeb>")
-        return this.translationManager.translate("command.more.than.one", audience).get()
+        val namespace = TranslationService.fromNamespace("exceptionCommands")
+        return namespace.translate("command.more.than.one", audience).get()
             .append(text("\n"))
             .append(text("$prefix <#fffbeb>$fancyMessage"))
     }

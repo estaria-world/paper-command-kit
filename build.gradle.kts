@@ -52,7 +52,7 @@ dependencies {
 
     // estaria dependencies
     compileOnly("world.estaria:kube-configmap-kit:1.0.4")
-    compileOnly("world.estaria:translation-api:1.0.4")
+    compileOnly("world.estaria:translation-api:1.1.0")
 
     // paper dependencies
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")

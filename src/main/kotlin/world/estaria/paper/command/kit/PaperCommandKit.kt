@@ -15,11 +15,10 @@ object PaperCommandKit {
     /**
      * Creates a new instance of [CommandBuilder]
      * @param javaPlugin to initialize the cloud commands
-     * @param tokenStorageType where should the GitHub token
      * @return new command builder instance
      */
     fun create(javaPlugin: JavaPlugin): CommandBuilder {
-        val translationManager = TranslationInitializer("exceptionCommands", "paper")
+        TranslationInitializer("exceptionCommands", "paper")
             .initialize()
 
         val commandManager = PaperCommandManager.createNative(
@@ -28,7 +27,7 @@ object PaperCommandKit {
         )
         commandManager.registerBrigadier()
         commandManager.registerAsynchronousCompletions()
-        MinecraftExceptionCreator(translationManager).create(commandManager)
+        MinecraftExceptionCreator().create(commandManager)
         return CommandBuilder(commandManager)
     }
 
