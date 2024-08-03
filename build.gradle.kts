@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "world.estaria"
-version = "1.0.6"
+version = "1.0.7"
 
 repositories {
     mavenCentral()
@@ -69,6 +69,13 @@ dependencies {
 
 tasks.named("shadowJar", ShadowJar::class) {
     mergeServiceFiles()
+    dependencies {
+        exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib"))
+        exclude(dependency("org.jetbrains.kotlin:kotlin-reflect"))
+        exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib-common"))
+        exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk7"))
+        exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib-jdk8"))
+    }
 }
 
 publishing {
