@@ -2,14 +2,14 @@ package world.estaria.paper.command.kit
 
 import org.bukkit.command.CommandSender
 import org.incendo.cloud.annotations.AnnotationParser
-import org.incendo.cloud.paper.PaperCommandManager
+import org.incendo.cloud.paper.LegacyPaperCommandManager
 
 /**
  * @author Niklas Nieberler
  */
 
 class CommandBuilder(
-    commandManager: PaperCommandManager<CommandSender>
+    commandManager: LegacyPaperCommandManager<CommandSender>
 ) {
 
     private val annotationParser = AnnotationParser(commandManager, CommandSender::class.java)

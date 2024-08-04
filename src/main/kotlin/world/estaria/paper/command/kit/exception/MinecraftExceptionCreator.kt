@@ -8,7 +8,7 @@ import org.incendo.cloud.exception.InvalidSyntaxException
 import org.incendo.cloud.exception.NoPermissionException
 import org.incendo.cloud.exception.handling.ExceptionContext
 import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler
-import org.incendo.cloud.paper.PaperCommandManager
+import org.incendo.cloud.paper.LegacyPaperCommandManager
 import world.avionik.minecraft.common.extension.text
 import world.estaria.translation.api.extension.translate
 import world.estaria.translation.api.namespace.TranslationService
@@ -22,7 +22,7 @@ import java.util.*
 
 class MinecraftExceptionCreator {
 
-    fun create(commandManager: PaperCommandManager<CommandSender>) {
+    fun create(commandManager: LegacyPaperCommandManager<CommandSender>) {
         MinecraftExceptionHandler.createNative<CommandSender>()
             .handler(NoPermissionException::class.java, MinecraftExceptionHandler.createDefaultNoPermissionHandler())
             .handler(ArgumentParseException::class.java) { _, exception -> getComponentCommandUsage(exception) }
