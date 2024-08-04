@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "world.estaria"
-version = "1.0.7"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -43,7 +43,7 @@ repositories {
     }
 }
 
-private var incendoCloudVersion = "2.0.0-beta.2"
+private var incendoCloudVersion = "2.0.0-rc.2"
 
 dependencies {
     // avionik dependencies
@@ -55,13 +55,13 @@ dependencies {
     compileOnly("world.estaria:translation-api:1.1.0")
 
     // paper dependencies
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
 
     // cloud dependencies
     api("org.incendo:cloud-core:$incendoCloudVersion")
-    api("org.incendo:cloud-paper:$incendoCloudVersion")
+    api("org.incendo:cloud-paper:2.0.0-beta.8")
     api("org.incendo:cloud-annotations:$incendoCloudVersion")
-    api("org.incendo:cloud-minecraft-extras:$incendoCloudVersion")
+    api("org.incendo:cloud-minecraft-extras:2.0.0-beta.8")
 
     // kubernetes dependencies
     api("io.fabric8:kubernetes-client:6.12.1")
