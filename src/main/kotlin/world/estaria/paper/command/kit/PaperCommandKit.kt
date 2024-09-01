@@ -3,7 +3,6 @@ package world.estaria.paper.command.kit
 import org.bukkit.plugin.java.JavaPlugin
 import org.incendo.cloud.execution.ExecutionCoordinator
 import org.incendo.cloud.paper.LegacyPaperCommandManager
-import org.incendo.cloud.paper.PaperCommandManager
 import world.estaria.paper.command.kit.exception.MinecraftExceptionCreator
 import world.estaria.translation.api.TranslationInitializer
 
@@ -24,7 +23,7 @@ object PaperCommandKit {
 
         val commandManager = LegacyPaperCommandManager
             .createNative(javaPlugin, ExecutionCoordinator.simpleCoordinator())
-        commandManager.registerBrigadier()
+        commandManager.registerLegacyPaperBrigadier()
         commandManager.registerAsynchronousCompletions()
         MinecraftExceptionCreator().create(commandManager)
         return CommandBuilder(commandManager)

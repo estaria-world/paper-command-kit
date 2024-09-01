@@ -18,28 +18,9 @@ repositories {
 
     // estaria dependencies
     maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/estaria-world/kube-configmap-kit")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-        }
-    }
-    maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/estaria-world/translation")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-        }
-    }
-    maven {
-        name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/estaria-world/github-file-manager")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-        }
+        name = "estaria"
+        url = uri("https://repo.estaria.world/releases")
+        credentials(PasswordCredentials::class.java)
     }
 }
 
@@ -51,20 +32,14 @@ dependencies {
     compileOnly("world.avionik:minecraft-common:1.0.1")
 
     // estaria dependencies
-    compileOnly("world.estaria:kube-configmap-kit:1.0.4")
     compileOnly("world.estaria:translation-api:1.1.0")
-
-    // paper dependencies
-    compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+    compileOnly("world.estaria.coco.paper:coco-paper-api:1.21.1-R0.1-SNAPSHOT")
 
     // cloud dependencies
     api("org.incendo:cloud-core:$incendoCloudVersion")
-    api("org.incendo:cloud-paper:2.0.0-beta.8")
+    api("org.incendo:cloud-paper:2.0.0-beta.9")
     api("org.incendo:cloud-annotations:$incendoCloudVersion")
-    api("org.incendo:cloud-minecraft-extras:2.0.0-beta.8")
-
-    // kubernetes dependencies
-    api("io.fabric8:kubernetes-client:6.12.1")
+    api("org.incendo:cloud-minecraft-extras:2.0.0-beta.9")
 }
 
 tasks.named("shadowJar", ShadowJar::class) {
@@ -81,12 +56,9 @@ tasks.named("shadowJar", ShadowJar::class) {
 publishing {
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/estaria-world/paper-command-kit")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
-            }
+            name = "estaria"
+            url = uri("https://repo.estaria.world/releases")
+            credentials(PasswordCredentials::class.java)
         }
     }
     publications {
